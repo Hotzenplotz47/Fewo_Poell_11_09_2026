@@ -1,0 +1,805 @@
+/* ==========================================================================
+   Schriften — liegen auf dem eigenen Server.
+   Bewusst NICHT über Google Fonts eingebunden: das würde bei jedem Aufruf
+   die IP-Adresse der Besucher an Google übertragen und ist in Deutschland
+   abmahnfähig (LG München I, Az. 3 O 17493/20).
+   ========================================================================== */
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("schriften/newsreader-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("schriften/newsreader-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("schriften/newsreader-latin-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("schriften/karla-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("schriften/karla-latin-500-normal.woff2") format("woff2");
+}
+
+/* ==========================================================================
+   Ferienwohnung Pöll  ·  Landhaus Wackerl
+   Gemeinsames Stylesheet für beide Häuser.
+
+   ALLE Farben, Schriften und Abstände stehen im :root-Block.
+   Willst du etwas ändern, änderst du es HIER und nirgends sonst.
+   ========================================================================== */
+
+:root {
+  /* ---- FARBEN ---------------------------------------------------------- */
+  --papier:        #F7F6F2;   /* Seitenhintergrund, wie heller Kalkputz     */
+  --flaeche:       #FFFFFF;   /* abgesetzte Blöcke, Preiskarten            */
+  --tinte:         #1F231F;   /* Überschriften, Fließtext                  */
+  --tinte-leise:   #5E625B;   /* Bildunterschriften, Nebeninfos            */
+  --linie:         #DCD9CF;   /* Trennlinien, Rahmen                       */
+  --bild-leer:     #E7E4DA;   /* Fläche, solange ein Bild fehlt            */
+  --weiss:         #FFFFFF;   /* Schrift auf farbigem Grund                */
+
+  /* Farben für die dunklen Bereiche: Häuserleiste, Anfrage, Fuß */
+  --dunkel-text:   #C9CCC5;   /* Fließtext auf dunklem Grund               */
+  --dunkel-leise:  #9DA199;   /* inaktiver Link in der Häuserleiste        */
+  --dunkel-linie:  #383D37;   /* Trennlinien auf dunklem Grund             */
+  --dunkel-rahmen: #565B54;   /* Rahmen auf dunklem Grund                  */
+  --dunkel-flaeche:#2C302B;   /* Hover-Fläche auf dunklem Grund            */
+
+  /* Farben für die Lückenhinweise in Impressum und Datenschutz */
+  --hinweis:       #FDF3D6;
+  --hinweis-linie: #B8860B;
+
+  /* Nur technisch: Schwarz steuert in der Ausblendmaske die Sichtbarkeit,
+     es erscheint nirgends als Farbe auf der Seite. */
+  --maske-voll:    #000000;
+
+  /* Die beiden Hausfarben. Sie bleiben immer verfügbar, weil die
+     Umschalter beide Häuser gleichzeitig zeigen.                          */
+  --akzent-poell:     #33553C;   /* Tannengrün           */
+  --akzent-wackerl:   #8C2B22;   /* Lüftlmalerei-Rot     */
+
+  /* Akzent der aktuellen Seite, unten pro Haus überschrieben */
+  --akzent:        var(--akzent-poell);
+  --akzent-hell:   #EDF1EC;
+
+  /* ---- TYPOGRAFIE ------------------------------------------------------ */
+  --schrift-titel: "Newsreader", Georgia, serif;
+  --schrift-text:  "Karla", system-ui, sans-serif;
+
+  --groesse-xs:  0.875rem;  /* 14 px */
+  --groesse-s:   1rem;      /* 16 px */
+  --groesse-m:   1.125rem;  /* 18 px */
+  --groesse-l:   1.3125rem; /* 21 px */
+  --groesse-xl:  1.6875rem; /* 27 px */
+  --groesse-2xl: 2.25rem;   /* 36 px */
+  --groesse-3xl: 3.25rem;   /* 52 px */
+
+  /* ---- ABSTÄNDE (Vielfache von 8) -------------------------------------- */
+  --raum-1:  8px;
+  --raum-2:  16px;
+  --raum-3:  24px;
+  --raum-4:  40px;
+  --raum-5:  64px;
+  --raum-6:  96px;
+  --raum-7: 128px;
+
+  /* ---- LAYOUT ---------------------------------------------------------- */
+  --inhalt:      1120px;
+  --textbreite:  62ch;
+  --radius:      2px;
+}
+
+/* Landhaus Wackerl bekommt dieselbe Gestaltung, nur ein anderes Rot.
+   Dafür steht im HTML: <html lang="de" data-haus="wackerl">            */
+:root[data-haus="wackerl"] {
+  --akzent:      var(--akzent-wackerl);
+  --akzent-hell: #F5EBE9;
+}
+
+
+/* ==========================================================================
+   Grundlagen
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--tinte);
+  font-family: var(--schrift-text);
+  font-size: var(--groesse-m);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--schrift-titel);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 var(--raum-2); max-width: var(--textbreite); }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--akzent); }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--akzent);
+  outline-offset: 3px;
+}
+
+.inhalt {
+  width: min(100% - 2 * var(--raum-3), var(--inhalt));
+  margin-inline: auto;
+}
+
+section { padding-block: var(--raum-6); }
+
+.abschnitt-titel {
+  font-size: var(--groesse-2xl);
+  margin-bottom: var(--raum-4);
+}
+
+
+/* ==========================================================================
+   Häuser-Wechsler — das verbindende Element beider Seiten
+   ========================================================================== */
+
+.haeuser {
+  background: var(--tinte);
+  color: var(--papier);
+  font-size: var(--groesse-xs);
+}
+
+.haeuser__zeile {
+  display: flex;
+  flex-wrap: nowrap;          /* beide Häuser bleiben in einer Zeile */
+  gap: var(--raum-3);
+  padding-block: var(--raum-1);
+}
+
+/* Umschalter zwischen den Häusern: ovaler Bildausschnitt und Name.
+   Die Ovalform und die Farbzuordnung stammen von den alten Signets. */
+.haus-knopf {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  text-decoration: none;
+  color: var(--dunkel-leise);
+}
+
+.haus-knopf__bild {
+  flex: none;
+  width: 66px;
+  aspect-ratio: 4 / 3;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bild-leer);
+  border: 2px solid var(--haus-farbe);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.haus-knopf__bild img { width: 100%; height: 100%; object-fit: cover; }
+
+.haus-knopf--poell   { --haus-farbe: var(--akzent-poell); }
+.haus-knopf--wackerl { --haus-farbe: var(--akzent-wackerl); }
+
+.haus-knopf__name {
+  font-family: var(--schrift-titel);
+  font-size: var(--groesse-s);
+  line-height: 1.25;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+
+.haus-knopf:hover { color: var(--weiss); }
+
+.haus-knopf[aria-current="page"] { color: var(--weiss); }
+
+.haus-knopf[aria-current="page"] .haus-knopf__name {
+  border-bottom-color: var(--haus-farbe);
+}
+
+@media (max-width: 560px) {
+  .haeuser__zeile { gap: var(--raum-2); }
+  .haus-knopf { gap: 8px; }
+  .haus-knopf__bild { width: 46px; }
+  .haus-knopf__name { font-size: var(--groesse-xs); line-height: 1.15; }
+}
+
+
+/* ==========================================================================
+   Kopf und Navigation
+   ========================================================================== */
+
+.kopf {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--papier) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linie);
+}
+
+.kopf__zeile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 12px;
+}
+
+.marke {
+  font-family: var(--schrift-titel);
+  font-size: var(--groesse-l);
+  text-decoration: none;
+  color: var(--tinte);
+}
+
+.navi {
+  display: flex;
+  flex-wrap: nowrap;          /* soll auch auf dem Handy in eine Zeile passen */
+  justify-content: center;
+  gap: var(--raum-3);
+  font-size: var(--groesse-s);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .navi { gap: 14px; font-size: var(--groesse-xs); }
+}
+
+.navi a {
+  color: var(--tinte);
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+}
+
+.navi a:hover { border-bottom-color: var(--akzent); }
+
+/* Direktkontakt: feste Kacheln am linken Rand statt im Kopf.
+   Dadurch bleibt die Kopfzeile auf dem Handy schmal, und Anrufen ist
+   von jeder Stelle der Seite aus einen Fingertipp entfernt. */
+.schnellkontakt {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.schnellkontakt a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--akzent);
+  color: var(--weiss);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
+}
+
+.schnellkontakt a:hover { background: var(--tinte); }
+
+.schnellkontakt svg { width: 22px; height: 22px; }
+
+@media (max-width: 480px) {
+  .schnellkontakt a { width: 46px; height: 46px; }
+  .schnellkontakt svg { width: 20px; height: 20px; }
+}
+
+
+/* ==========================================================================
+   Auftakt — großes Bild über die volle Breite, Text zentriert darunter
+   ========================================================================== */
+
+/* Auftaktbild: läuft randlos über die Breite und wird NICHT beschnitten.
+   Nach unten blendet es über eine Maske in den Seitenhintergrund aus, der
+   Text darunter rückt in die ausgeblendete Zone hinein. Dadurch greifen
+   Bild und Text ineinander, statt als zwei Blöcke übereinanderzuliegen. */
+.buehne {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.buehne img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 74vh;          /* damit das Bild am Rechner nicht die ganze Höhe frisst */
+
+  -webkit-mask-image: linear-gradient(to bottom,
+      var(--maske-voll) 0%, var(--maske-voll) 72%, rgba(0,0,0,0.6) 88%, transparent 100%);
+          mask-image: linear-gradient(to bottom,
+      var(--maske-voll) 0%, var(--maske-voll) 72%, rgba(0,0,0,0.6) 88%, transparent 100%);
+}
+
+/* Ältere Browser ohne Maskenunterstützung zeigen das Bild einfach
+   mit harter Kante. Die Seite bleibt in jedem Fall benutzbar. */
+
+.auftakt {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(-280px, -20vw, -96px);   /* Kasten schiebt sich ins Bild */
+  padding-block: 0 var(--raum-5);
+  text-align: center;
+}
+
+/* Halbtransparenter Kasten, damit die Schrift auf dem Foto lesbar bleibt */
+.auftakt__karte {
+  max-width: 640px;
+  margin-inline: auto;
+  padding: var(--raum-4) var(--raum-3);
+  background: rgba(247, 246, 242, 0.86);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.10);
+}
+
+@media (max-width: 560px) {
+  .auftakt__karte { padding: var(--raum-3) var(--raum-2); }
+}
+
+.auftakt h1 {
+  font-size: var(--groesse-2xl);
+  margin-bottom: var(--raum-3);
+}
+
+@media (min-width: 700px) {
+  .auftakt h1 { font-size: var(--groesse-3xl); }
+}
+
+.auftakt__unterzeile {
+  font-size: var(--groesse-l);
+  color: var(--tinte-leise);
+  margin: 0 auto var(--raum-4);
+  max-width: 46ch;
+}
+
+.knopfzeile--mitte { justify-content: center; }
+
+.auftakt__ort {
+  display: block;
+  font-size: var(--groesse-s);
+  color: var(--tinte-leise);
+  margin-top: var(--raum-3);
+}
+
+
+/* ==========================================================================
+   Bildrahmen — hält seine Form, auch wenn noch kein Bild da ist
+   ========================================================================== */
+
+.bild {
+  margin: 0;
+  background: var(--bild-leer);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.bild img { width: 100%; height: 100%; object-fit: cover; }
+
+.bild--hoch  { aspect-ratio: 3 / 4; }
+.bild--quer  { aspect-ratio: 4 / 3; }
+.bild--breit { aspect-ratio: 16 / 9; }
+.bild--quad  { aspect-ratio: 1 / 1; }
+
+/* Galerie je Wohnung: ein großes Bild, darunter eine Reihe kleiner.
+   Die Kleinbilder liegen in einer eigenen Zeile, damit sie auf dem Handy
+   nebeneinander bleiben statt untereinander zu rutschen.               */
+.galerie__klein {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--raum-1);
+  margin-top: var(--raum-1);
+}
+
+.galerie__klein .bild { cursor: zoom-in; }
+
+/* Nur ein Kleinbild vorhanden: feste Dreierteilung, damit es nicht
+   über die ganze Breite gezogen wird. */
+.galerie__klein--eins { grid-template-columns: repeat(3, 1fr); }
+
+.bildzeile {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--raum-2);
+}
+
+
+/* ==========================================================================
+   Kontakt-Schaltflächen
+   ========================================================================== */
+
+.knopfzeile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--raum-2);
+  margin-bottom: var(--raum-3);
+}
+
+.knopf {
+  display: inline-block;
+  padding: 14px var(--raum-3);
+  font-family: var(--schrift-text);
+  font-size: var(--groesse-m);
+  text-decoration: none;
+  border-radius: var(--radius);
+  border: 1px solid var(--akzent);
+}
+
+.knopf--voll {
+  background: var(--akzent);
+  color: var(--weiss);
+}
+
+.knopf--voll:hover { background: var(--tinte); border-color: var(--tinte); }
+
+.knopf--leer { background: transparent; color: var(--akzent); }
+.knopf--leer:hover { background: var(--akzent-hell); }
+
+
+/* ==========================================================================
+   Begrüßung
+   ========================================================================== */
+
+.gruss {
+  background: var(--flaeche);
+  border-block: 1px solid var(--linie);
+}
+
+.gruss__text {
+  font-family: var(--schrift-titel);
+  font-size: var(--groesse-xl);
+  line-height: 1.5;
+  max-width: 34ch;
+}
+
+.gruss__raster {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--raum-4);
+}
+
+@media (min-width: 900px) {
+  .gruss__raster { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.gruss__signatur {
+  font-family: var(--schrift-titel);
+  font-style: italic;
+  font-size: var(--groesse-l);
+  color: var(--akzent);
+  margin-top: var(--raum-3);
+}
+
+
+/* ==========================================================================
+   Wohnungen
+   ========================================================================== */
+
+.wohnung {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--raum-4);
+  padding-block: var(--raum-5);
+  border-top: 1px solid var(--linie);
+}
+
+.wohnung:last-of-type { border-bottom: 1px solid var(--linie); }
+
+@media (min-width: 900px) {
+  .wohnung { grid-template-columns: 0.9fr 1.1fr; gap: var(--raum-5); }
+  .wohnung--gedreht .wohnung__bild { order: 2; }
+}
+
+.wohnung h3 {
+  font-size: var(--groesse-xl);
+  margin-bottom: var(--raum-2);
+}
+
+.wohnung__eckdaten {
+  font-size: var(--groesse-s);
+  color: var(--tinte-leise);
+  margin-bottom: var(--raum-3);
+}
+
+.ausstattung {
+  list-style: none;
+  margin: var(--raum-3) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 6px var(--raum-3);
+  font-size: var(--groesse-s);
+  color: var(--tinte-leise);
+}
+
+.ausstattung li { padding-left: 18px; position: relative; }
+
+.ausstattung li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 8px;
+  height: 1px;
+  background: var(--akzent);
+}
+
+/* Preis — die wichtigste Zahl der Seite, deshalb bekommt sie Raum */
+.preis {
+  margin-top: var(--raum-3);
+  padding: var(--raum-3);
+  background: var(--akzent-hell);
+  border-radius: var(--radius);
+}
+
+.preis__zeile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--raum-1);
+  padding-block: 6px;
+}
+
+.preis__zeile + .preis__zeile { border-top: 1px solid rgba(0, 0, 0, 0.07); }
+
+.preis__wert {
+  font-family: var(--schrift-titel);
+  font-size: var(--groesse-xl);
+  color: var(--akzent);
+  white-space: nowrap;
+}
+
+.preis__hinweis {
+  margin-top: var(--raum-2);
+  font-size: var(--groesse-xs);
+  color: var(--tinte-leise);
+  line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   Leistungen
+   ========================================================================== */
+
+.leistungen__raster {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--raum-4);
+}
+
+@media (min-width: 760px) {
+  .leistungen__raster { grid-template-columns: 1fr 1fr; }
+}
+
+.leistungen h3 {
+  font-size: var(--groesse-l);
+  margin-bottom: var(--raum-2);
+}
+
+
+/* ==========================================================================
+   Anfrage
+   ========================================================================== */
+
+.anfrage {
+  background: var(--tinte);
+  color: var(--papier);
+}
+
+.anfrage h2 { color: var(--papier); }
+
+.anfrage p { color: var(--dunkel-text); }
+
+.anfrage__raster {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--raum-4);
+}
+
+@media (min-width: 900px) {
+  .anfrage__raster { grid-template-columns: 1.1fr 0.9fr; gap: var(--raum-6); }
+}
+
+.anfrage .knopf--voll {
+  background: var(--papier);
+  color: var(--tinte);
+  border-color: var(--papier);
+}
+
+.anfrage .knopf--voll:hover { background: var(--weiss); }
+
+.anfrage .knopf--leer { color: var(--papier); border-color: var(--dunkel-rahmen); }
+.anfrage .knopf--leer:hover { background: var(--dunkel-flaeche); }
+
+.kontaktliste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--groesse-s);
+}
+
+.kontaktliste li {
+  padding-block: var(--raum-2);
+  border-top: 1px solid var(--dunkel-linie);
+}
+
+.kontaktliste a { color: var(--papier); }
+
+
+/* ==========================================================================
+   Das andere Haus
+   ========================================================================== */
+
+.nachbar { background: var(--flaeche); border-top: 1px solid var(--linie); }
+
+.nachbar__raster {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--raum-4);
+  align-items: center;
+}
+
+@media (min-width: 760px) {
+  .nachbar__raster { grid-template-columns: 0.8fr 1.2fr; gap: var(--raum-5); }
+}
+
+.nachbar h2 { font-size: var(--groesse-2xl); margin-bottom: var(--raum-2); }
+
+
+/* ==========================================================================
+   Fuß
+   ========================================================================== */
+
+.fuss {
+  padding-block: var(--raum-4);
+  font-size: var(--groesse-xs);
+  color: var(--tinte-leise);
+  border-top: 1px solid var(--linie);
+}
+
+.fuss__zeile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--raum-1) var(--raum-3);
+  justify-content: space-between;
+}
+
+.fuss a { color: var(--tinte-leise); }
+
+
+/* ==========================================================================
+   Rücksicht auf Menschen, die Bewegung reduzieren
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Wohnung ohne Fotos: Textspalte auf voller Breite, damit keine leere
+   Bildfläche entsteht. Sobald Fotos vorhanden sind, Klasse entfernen. */
+.wohnung--ohne-bild { grid-template-columns: 1fr; }
+
+/* ==========================================================================
+   Rechtstexte (Impressum, Datenschutz)
+   ========================================================================== */
+
+.rechtstext { padding-block: var(--raum-5) var(--raum-6); }
+
+.rechtstext h1 { font-size: var(--groesse-2xl); margin-bottom: var(--raum-4); }
+
+.rechtstext h2 {
+  font-size: var(--groesse-l);
+  margin: var(--raum-4) 0 var(--raum-1);
+  padding-top: var(--raum-3);
+  border-top: 1px solid var(--linie);
+}
+
+.rechtstext p, .rechtstext ul { max-width: var(--textbreite); }
+
+/* Auffälliger Hinweis für unfertige Stellen. Vor dem Livegang entfernen. */
+.luecke {
+  background: var(--hinweis);
+  border-left: 3px solid var(--hinweis-linie);
+  padding: var(--raum-2) var(--raum-3);
+  margin: var(--raum-3) 0;
+  font-size: var(--groesse-s);
+}
+
+.luecke p { margin-bottom: var(--raum-1); }
+.luecke p:last-child { margin-bottom: 0; }
+
+.platzhalter {
+  background: var(--hinweis);
+  padding: 1px 5px;
+  font-family: "DejaVu Sans Mono", monospace;
+  font-size: 0.9em;
+}
+
+/* Sprunglink: nur sichtbar, wenn er mit der Tabulatortaste angesteuert wird */
+.sprunglink {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--akzent);
+  color: var(--weiss);
+  padding: 12px 20px;
+  text-decoration: none;
+}
+
+.sprunglink:focus { left: 0; }
+
+/* ==========================================================================
+   Kleine Randnotiz: schmales Bild neben kurzem Text.
+   Bewusst zurückhaltend, damit sie den Wohnungen nicht die Schau stiehlt.
+   ========================================================================== */
+
+.notiz {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--raum-3);
+  align-items: center;
+  padding-block: var(--raum-5);
+  border-top: 1px solid var(--linie);
+}
+
+@media (min-width: 700px) {
+  .notiz { grid-template-columns: 340px 1fr; gap: var(--raum-4); }
+}
+
+.notiz h3 { font-size: var(--groesse-l); margin-bottom: var(--raum-1); }
+
+.notiz p { font-size: var(--groesse-s); color: var(--tinte-leise); }
+
+/* Kleine Zwischenüberschrift über Aufzählungen, z. B. "Unser Service:" */
+.listen-titel {
+  font-size: var(--groesse-s);
+  font-weight: 500;
+  margin: var(--raum-3) 0 0;
+}
