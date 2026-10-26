@@ -46,21 +46,21 @@ Tannengrün, `wackerl` Lüftlmalerei-Rot.
 
 ## Vor dem Livegang abarbeiten
 
-1. Impressum und Datenschutzerklärung ausfüllen, in beiden Ordnern. Alle
-   vier Seiten enthalten gelb markierte Lücken und einen Hinweiskasten,
-   der danach gelöscht wird. Die bestehenden Texte liegen im alten TYPO3
-   auf dem All-inkl-Server.
+1. ~~Impressum und Datenschutzerklärung ausfüllen~~ – erledigt, auf Basis
+   der alten TYPO3-Texte, an den heutigen Stand angepasst. Keine
+   USt-IdNr. eingetragen (die alte Seite hatte keine) – falls doch eine
+   existiert, im Impressum ergänzen.
 2. Prüfen, ob der Tarif "all-inkl Privat" für gewerbliche Vermietung
-   zulässig ist, und den Vertrag zur Auftragsverarbeitung anfordern.
-3. Altes TYPO3 sichern: alle Dateien per FTP herunterladen, Datenbank im
-   KAS über phpMyAdmin exportieren.
+   zulässig ist, und den Vertrag zur Auftragsverarbeitung im KAS
+   abschließen. Die Datenschutzerklärung setzt ihn bereits voraus.
+3. ~~Altes TYPO3 sichern~~ – Datenbank exportiert, Dateien per FTP noch
+   offen. Die Sicherung gehört nicht in dieses Repository.
 4. Im KAS jeder Domain ihr eigenes Verzeichnis zuweisen und das
    SSL-Zertifikat (Let's Encrypt) für beide Domains einschalten.
 5. In jeder `.htaccess` die drei auskommentierten Zeilen der
    https-Weiterleitung aktivieren (# entfernen).
-6. In allen acht HTML-Dateien die Zeile
-   `<meta name="robots" content="noindex, nofollow">` entfernen und in
-   beiden `robots.txt` die Sperre aufheben (Anleitung steht in der Datei).
+6. ~~Suchmaschinen-Sperre aufheben~~ – erledigt: `robots.txt` freigegeben,
+   `noindex` entfernt (bleibt nur auf den Fehlerseiten).
 7. Ordnerinhalt per FTP hochladen, auch die versteckte Datei `.htaccess`.
    Danach prüfen: http leitet auf https um, ohne www leitet auf www um,
    eine unbekannte Adresse zeigt die Fehlerseite, alle Links im

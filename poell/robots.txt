@@ -1,9 +1,4 @@
-# Testphase: die Seite soll noch nicht in Suchmaschinen erscheinen.
-# Vor dem Livegang die naechsten beiden Zeilen loeschen und die
-# Sitemap-Zeile aktivieren.
 User-agent: *
-Disallow: /
+Allow: /
 
-# User-agent: *
-# Allow: /
-# Sitemap: https://www.ferienwohnung-poell.de/sitemap.xml
+Sitemap: https://www.ferienwohnung-poell.de/sitemap.xml
