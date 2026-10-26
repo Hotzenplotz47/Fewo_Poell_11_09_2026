@@ -81,6 +81,11 @@ Rechtschreib- und Grammatikfehler:
 - "Paterre" → "Parterre"
 - "mit 47m² ist und separates Schlafzimmer" → "mit 47 m² hat ein separates Schlafzimmer"
 
+Am 27.10.2026 erneut mit der laufenden alten Seite abgeglichen. Sätze, die
+dort nicht stehen (Preisnachlass/Kinderermäßigung, Hunde- und Gartentext,
+Buckelwiesen/5 km), wurden entfernt bzw. durch den Originalwortlaut ersetzt.
+Kontakt Landhaus Wackerl: Steffi Pöll, wie auf der alten Kontaktseite.
+
 ## Was bereits erledigt ist
 
 - Schriften liegen lokal, keine Verbindung zu Google Fonts
