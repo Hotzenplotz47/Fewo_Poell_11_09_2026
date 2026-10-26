@@ -7,17 +7,24 @@ ErrorDocument 404 /404.html
 Options -Indexes
 
 # Alles auf https://www.ferienwohnung-poell.de umleiten.
-# Erst aktivieren, wenn im KAS das SSL-Zertifikat fuer die Domain
-# eingeschaltet ist – sonst laeuft die Seite in eine Fehlermeldung.
-# Dann bei den naechsten drei Zeilen das # am Anfang entfernen.
+# SSL-Zertifikat ist im KAS aktiv (Stand 27.10.2026).
 RewriteEngine On
-# RewriteCond %{HTTPS} off [OR]
-# RewriteCond %{HTTP_HOST} !^www\. [NC]
-# RewriteRule ^ https://www.ferienwohnung-poell.de%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.ferienwohnung-poell.de%{REQUEST_URI} [R=301,L]
 
 # Alte TYPO3-Adressen auf die Startseite schicken, damit Lesezeichen
 # und Google-Treffer nicht im Leeren landen
 RewriteRule ^index\.php$ / [R=301,L]
+RewriteRule ^ferienwohnung-poell/(ferienwohnung|appartement)/?$ /#wohnungen [R=301,NE,L]
+RewriteRule ^ferienwohnung-poell/umgebung/?$ /#umgebung [R=301,NE,L]
+RewriteRule ^ferienwohnung-poell/(kontakt|lage)/?$ /#anfrage [R=301,NE,L]
+RewriteRule ^ferienwohnung-poell/impressum/?$ /impressum.html [R=301,L]
+RewriteRule ^ferienwohnung-poell/datenschutz/?$ /datenschutz.html [R=301,L]
+RewriteRule ^ferienwohnung-poell(/.*)?$ / [R=301,L]
+# Beide Domains zeigten früher dasselbe TYPO3, daher auch die Adressen
+# des anderen Hauses auf dessen neue Domain schicken
+RewriteRule ^landhaus-wackerl(/.*)?$ https://www.landhaus-wackerl.de/ [R=301,L]
 
 # Browser sollen Bilder, Schriften und das Stylesheet zwischenspeichern
 <IfModule mod_expires.c>
