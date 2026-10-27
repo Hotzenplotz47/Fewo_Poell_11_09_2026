@@ -5,22 +5,34 @@ Reines HTML und CSS. Keine Datenbank, kein Framework, kein JavaScript.
 
 ## Dateien
 
-    index.html                 Startseite Ferienwohnung Pöll
-    landhaus-wackerl.html      Startseite Landhaus Wackerl
-    impressum.html             Impressum Pöll
-    datenschutz.html           Datenschutz Pöll
-    impressum-wackerl.html     Impressum Wackerl
-    datenschutz-wackerl.html   Datenschutz Wackerl
-    404.html                   Fehlerseite
-    style.css                  gemeinsames Stylesheet
-    robots.txt                 Steuerung für Suchmaschinen
-    sitemap.xml                Seitenverzeichnis
-    favicon.svg                Signet Pöll
-    favicon-wackerl.svg        Signet Wackerl
-    apple-touch-icon*.png      Symbol für den iOS-Startbildschirm
-    vorschau-*.jpg             Vorschaubild beim Teilen von Links
-    bilder/                    33 Fotos
-    schriften/                 5 Schriftdateien, lokal eingebunden
+Zwei Domains, zwei Ordner. Jeder Ordner ist vollständig und wird so, wie
+er ist, in das Verzeichnis seiner Domain bei All-inkl hochgeladen.
+
+    poell/      -> www.ferienwohnung-poell.de
+    wackerl/    -> www.landhaus-wackerl.de
+    index.html  nur Testübersicht für GitHub Pages, nicht hochladen
+
+Inhalt jedes Ordners:
+
+    index.html          Startseite
+    impressum.html      Impressum
+    datenschutz.html    Datenschutzerklärung
+    404.html            Fehlerseite
+    .htaccess           Fehlerseite, Weiterleitungen, Zwischenspeicher
+    style.css           Stylesheet (in beiden Ordnern identisch)
+    robots.txt          Steuerung für Suchmaschinen
+    sitemap.xml         Seitenverzeichnis
+    favicon.svg         Signet
+    apple-touch-icon.png  Symbol für den iOS-Startbildschirm
+    vorschau-*.jpg      Vorschaubild beim Teilen von Links
+    bilder/             nur die Fotos, die dieses Haus verwendet
+    schriften/          5 Schriftdateien, lokal eingebunden
+
+`style.css` und `schriften/` liegen absichtlich doppelt vor. Wer das
+Stylesheet ändert, kopiert es danach in den anderen Ordner und zählt die
+Versionsnummer `?v=` in allen HTML-Dateien beider Ordner hoch.
+
+Die Knöpfe zum jeweils anderen Haus verweisen auf die volle Domain.
 
 ## Gestaltung ändern
 
@@ -34,18 +46,27 @@ Tannengrün, `wackerl` Lüftlmalerei-Rot.
 
 ## Vor dem Livegang abarbeiten
 
-1. Impressum und Datenschutzerklärung ausfüllen. Beide Seiten enthalten
-   gelb markierte Lücken und einen Hinweiskasten, der danach gelöscht wird.
-   Die bestehenden Texte liegen im alten TYPO3 auf dem All-inkl-Server.
-2. In allen sieben HTML-Dateien die Zeile
-   `<meta name="robots" content="noindex, nofollow">` entfernen.
-3. In `robots.txt` die Sperre aufheben (Anleitung steht in der Datei).
-4. Auf der echten Domain heißen die Rechtstexte `impressum.html` und
-   `datenschutz.html`. Die Wackerl-Dateien entsprechend umbenennen und die
-   Verweise im Fußbereich anpassen.
-5. HTTPS im KAS aktivieren und Weiterleitung von http auf https einrichten.
-6. Prüfen, ob der Tarif "all-inkl Privat" für gewerbliche Vermietung
-   zulässig ist, und den Vertrag zur Auftragsverarbeitung anfordern.
+1. ~~Impressum und Datenschutzerklärung ausfüllen~~ – erledigt, auf Basis
+   der alten TYPO3-Texte, an den heutigen Stand angepasst. Keine
+   USt-IdNr. eingetragen (die alte Seite hatte keine) – falls doch eine
+   existiert, im Impressum ergänzen.
+2. Prüfen, ob der Tarif "all-inkl Privat" für gewerbliche Vermietung
+   zulässig ist, und den Vertrag zur Auftragsverarbeitung im KAS
+   abschließen. Die Datenschutzerklärung setzt ihn bereits voraus.
+3. ~~Altes TYPO3 sichern~~ – Datenbank exportiert, Dateien per FTP noch
+   offen. Die Sicherung gehört nicht in dieses Repository.
+4. Im KAS jeder Domain ihr eigenes Verzeichnis zuweisen und das
+   SSL-Zertifikat (Let's Encrypt) für beide Domains einschalten.
+5. In jeder `.htaccess` die drei auskommentierten Zeilen der
+   https-Weiterleitung aktivieren (# entfernen).
+6. ~~Suchmaschinen-Sperre aufheben~~ – erledigt: `robots.txt` freigegeben,
+   `noindex` entfernt (bleibt nur auf den Fehlerseiten).
+7. Ordnerinhalt per FTP hochladen, auch die versteckte Datei `.htaccess`.
+   Danach prüfen: http leitet auf https um, ohne www leitet auf www um,
+   eine unbekannte Adresse zeigt die Fehlerseite, alle Links im
+   Fußbereich funktionieren.
+8. Beide Domains in der Google Search Console anmelden und die Sitemap
+   einreichen.
 
 ## Herkunft der Texte
 
@@ -59,6 +80,11 @@ Rechtschreib- und Grammatikfehler:
 - "Gesseligkeit" → "Geselligkeit"
 - "Paterre" → "Parterre"
 - "mit 47m² ist und separates Schlafzimmer" → "mit 47 m² hat ein separates Schlafzimmer"
+
+Am 27.10.2026 erneut mit der laufenden alten Seite abgeglichen. Sätze, die
+dort nicht stehen (Preisnachlass/Kinderermäßigung, Hunde- und Gartentext,
+Buckelwiesen/5 km), wurden entfernt bzw. durch den Originalwortlaut ersetzt.
+Kontakt Landhaus Wackerl: Steffi Pöll, wie auf der alten Kontaktseite.
 
 ## Was bereits erledigt ist
 
