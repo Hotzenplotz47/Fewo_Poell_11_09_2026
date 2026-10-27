@@ -509,6 +509,20 @@ section { padding-block: var(--raum-6); }
 .knopf--leer { background: transparent; color: var(--akzent); }
 .knopf--leer:hover { background: var(--akzent-hell); }
 
+/* Laptop und PC (Maus statt Finger): Dort ist meist kein Programm zum
+   Telefonieren eingerichtet, ein Klick auf „Anrufen“ bewirkt nichts.
+   Deshalb Nummer und E-Mail-Adresse ausgeschrieben zeigen. Die
+   Telefonknöpfe sind dann reine Anzeige zum Abschreiben, die Kacheln am
+   Rand entfallen. */
+.nur-laptop { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .nur-handy  { display: none; }
+  .nur-laptop { display: inline; }
+  a[href^="tel:"] { pointer-events: none; text-decoration: none; }
+  .schnellkontakt { display: none; }
+}
+
 
 /* ==========================================================================
    Begrüßung
